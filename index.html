@@ -1,17 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-    <title>Titolo della Scheda</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarinaEma | Personal Website</title>
+    <meta name="description" content="Sito web personale e blog di FarinaEma. Creato in stile Internet 1.0, minimalista e veloce.">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Titolo Principale del Sito</h1>
-    
-    <p>Questo è un paragrafo di testo normale.</p>
-    
-    <hr>
-    
-    <p>Questo è un altro testo sotto la linea.</p>
+    <div class="container">
+        <!-- Top Nav with theme switcher -->
+        <nav class="top-nav">
+            <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambia tema">
+                [switch_theme]
+            </button>
+        </nav>
 
+        <!-- Profile Header -->
+        <header>
+            <div class="profile-section">
+                <div class="avatar-wrapper">
+                    <img src="assets/avatar.png" alt="FarinaEma Avatar" class="avatar-img">
+                </div>
+                <div class="bio-info">
+                    <h1>FarinaEma</h1>
+                    <h2>I write code, build tools, and explore the web 💻🤖✨</h2>
+                    <div class="social-links">
+                        <a href="https://github.com" target="_blank" rel="noopener">github</a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener">twitter</a>
+                        <a href="mailto:email@example.com" id="email-link">email</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <hr>
+
+        <main>
+            <!-- About Section -->
+            <section id="about">
+                <h3>// about me</h3>
+                <p>
+                    Benvenuto sul mio spazio web personale. Questo sito è ispirato all'era dell'Internet 1.0: veloce, focalizzato sul testo e privo di bloatware. Qui raccolgo i miei progetti, la mia storia lavorativa e i miei pensieri sulla tecnologia e lo sviluppo software.
+                </p>
+            </section>
+
+            <!-- Experience Timeline -->
+            <section id="experience">
+                <h3>// history</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-meta">2026 - Presente</div>
+                        <div class="timeline-content">
+                            <h4>Progetti Indipendenti & Open Source</h4>
+                            <p>Sviluppo di applicazioni web moderne e minimaliste, esplorando l'integrazione di AI e nuove tecnologie frontend.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-meta">2024 - 2025</div>
+                        <div class="timeline-content">
+                            <h4>Software Developer</h4>
+                            <p>Collaborazione in team agili per lo sviluppo di soluzioni enterprise basate su cloud e microservizi.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-meta">2022 - 2024</div>
+                        <div class="timeline-content">
+                            <h4>Formazione & Primi Passi</h4>
+                            <p>Studi focalizzati sull'ingegneria del software, basi di dati e sviluppo web (Full-Stack).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blog / Writing Section -->
+            <section id="writing">
+                <h3>// writing</h3>
+                <ul class="post-list">
+                    <li class="post-item">
+                        <a href="#" class="post-title">Costruire un sito web minimalista nel 2026</a>
+                        <span class="post-date">27 Giu 2026</span>
+                    </li>
+                    <li class="post-item">
+                        <a href="#" class="post-title">Perché l'Internet 1.0 era fantastico (e cosa abbiamo perso)</a>
+                        <span class="post-date">15 Mag 2026</span>
+                    </li>
+                    <li class="post-item">
+                        <a href="#" class="post-title">La mia configurazione di sviluppo preferita</a>
+                        <span class="post-date">03 Apr 2026</span>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <span>© 2026 FarinaEma</span>
+            <span>Built with HTML &amp; CSS. Under 10KB.</span>
+        </footer>
+    </div>
+
+    <!-- Theme toggler logic -->
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Check for saved theme preference, otherwise use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '[light_mode]';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggle.textContent = '[dark_mode]';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+                themeToggle.textContent = '[light_mode]';
+            } else {
+                themeToggle.textContent = '[dark_mode]';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
 </body>
 </html>
