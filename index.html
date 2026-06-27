@@ -11,6 +11,8 @@
 </head>
 
 <body>
+    <div id="yt-player" style="position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px;"></div>
+
     <script>
         function setTheme(theme) {
             if (theme === 'dark') {
@@ -27,10 +29,59 @@
                 document.body.classList.add('theme-dark');
             }
         })();
+
+        // YouTube Audio Player logic
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var audioPlaying = false;
+        var videoId = "0RtIsy9AHYE"; // Neon Vivec by Young Scrolls
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '1',
+                width: '1',
+                videoId: videoId,
+                playerVars: {
+                    'playsinline': 1,
+                    'loop': 1,
+                    'playlist': videoId
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            player.setVolume(15);
+        }
+
+        function toggleAudio(play) {
+            if (!player) return;
+            const playLink = document.getElementById('audio-play');
+            const stopLink = document.getElementById('audio-stop');
+
+            if (play) {
+                player.playVideo();
+                audioPlaying = true;
+                playLink.style.fontWeight = 'bold';
+                stopLink.style.fontWeight = 'normal';
+            } else {
+                player.pauseVideo();
+                audioPlaying = false;
+                playLink.style.fontWeight = 'normal';
+                stopLink.style.fontWeight = 'bold';
+            }
+        }
     </script>
 
     <div style="text-align: right; font-size: 0.8em; margin-bottom: 15px;">
-        [Tema: <a href="javascript:void(0)" onclick="setTheme('classic')">Classico</a> | <a href="javascript:void(0)" onclick="setTheme('dark')">IDE Dark</a>]
+        [Tema: <a href="javascript:void(0)" onclick="setTheme('classic')">Chiaro</a> | <a href="javascript:void(0)" onclick="setTheme('dark')">Scuro</a>]
+        [Musica: <a href="javascript:void(0)" id="audio-play" onclick="toggleAudio(true)">Play</a> | <a href="javascript:void(0)" id="audio-stop" onclick="toggleAudio(false)" style="font-weight: bold;">Stop</a>]
     </div>
 
     <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 15px;">
@@ -60,7 +111,7 @@
     <hr>
     <br>
 
-    <small>© 2026 FarinaEma - Built with HTML &amp; CSS. Under 10KB.</small>
+    <small>© 2026 FarinaEma - Built with HTML &amp; CSS. Under 10KB. Music by <a href="https://www.youtube.com/watch?v=0RtIsy9AHYE" target="_blank" rel="noopener">Young Scrolls</a>.</small>
 
 </body>
 
