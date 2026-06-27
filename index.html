@@ -1,135 +1,62 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FarinaEma | Personal Website</title>
-    <meta name="description" content="Sito web personale e blog di FarinaEma. Creato in stile Internet 1.0, minimalista e veloce.">
+    <meta name="description"
+        content="Sito web personale e blog di FarinaEma. Creato in stile Internet 1.0, minimalista e veloce.">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <!-- Top Nav with theme switcher -->
-        <nav class="top-nav">
-            <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambia tema">
-                [switch_theme]
-            </button>
-        </nav>
+    <img src="assets/350-3539598986.webp" alt="FarinaEma Avatar" width="80" height="80" align="left"
+        style="margin-right: 15px; border: 1px solid #000;">
+    <h1 style="margin-top: 0;">FarinaEma</h1>
 
-        <!-- Profile Header -->
-        <header>
-            <div class="profile-section">
-                <div class="avatar-wrapper">
-                    <img src="assets/avatar.png" alt="FarinaEma Avatar" class="avatar-img">
-                </div>
-                <div class="bio-info">
-                    <h1>FarinaEma</h1>
-                    <h2>I write code, build tools, and explore the web 💻🤖✨</h2>
-                    <div class="social-links">
-                        <a href="https://github.com" target="_blank" rel="noopener">github</a>
-                        <a href="https://twitter.com" target="_blank" rel="noopener">twitter</a>
-                        <a href="mailto:email@example.com" id="email-link">email</a>
-                    </div>
-                </div>
-            </div>
-        </header>
+    Authors: FarinaEma<br>
+    Bio: Aspirante Ingegnere Nucleare, interessato a tutto a tech, storia ed The Elder Scrolls✨<br>
+    Contact: <a href="mailto:emanuelefarina26@gmail.com">emanuelefarina26@gmail.com</a><br>
+    GitHub: <a href="https://github.com/Flourboii" target="_blank" rel="noopener">http://github.com/Flourboii</a><br>
+    Avatar: <a href="assets/350-3539598986.webp">assets/350-3539598986.webp</a><br>
+    <br clear="left">
 
-        <hr>
+    <hr>
 
-        <main>
-            <!-- About Section -->
-            <section id="about">
-                <h3>// about me</h3>
-                <p>
-                    Benvenuto sul mio spazio web personale. Questo sito è ispirato all'era dell'Internet 1.0: veloce, focalizzato sul testo e privo di bloatware. Qui raccolgo i miei progetti, la mia storia lavorativa e i miei pensieri sulla tecnologia e lo sviluppo software.
-                </p>
-            </section>
+    <h3>About Me</h3>
+    Benvenuto sul mio spazio web personale. Questo sito è ispirato all'era dell'Internet 1.0: veloce, focalizzato sul
+    testo e privo di bloatware. Qui raccolgo i miei progetti, la mia storia lavorativa e i miei pensieri sulla
+    tecnologia e lo sviluppo software.<br>
 
-            <!-- Experience Timeline -->
-            <section id="experience">
-                <h3>// history</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-meta">2026 - Presente</div>
-                        <div class="timeline-content">
-                            <h4>Progetti Indipendenti & Open Source</h4>
-                            <p>Sviluppo di applicazioni web moderne e minimaliste, esplorando l'integrazione di AI e nuove tecnologie frontend.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-meta">2024 - 2025</div>
-                        <div class="timeline-content">
-                            <h4>Software Developer</h4>
-                            <p>Collaborazione in team agili per lo sviluppo di soluzioni enterprise basate su cloud e microservizi.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-meta">2022 - 2024</div>
-                        <div class="timeline-content">
-                            <h4>Formazione & Primi Passi</h4>
-                            <p>Studi focalizzati sull'ingegneria del software, basi di dati e sviluppo web (Full-Stack).</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <br>
 
-            <!-- Blog / Writing Section -->
-            <section id="writing">
-                <h3>// writing</h3>
-                <ul class="post-list">
-                    <li class="post-item">
-                        <a href="#" class="post-title">Costruire un sito web minimalista nel 2026</a>
-                        <span class="post-date">27 Giu 2026</span>
-                    </li>
-                    <li class="post-item">
-                        <a href="#" class="post-title">Perché l'Internet 1.0 era fantastico (e cosa abbiamo perso)</a>
-                        <span class="post-date">15 Mag 2026</span>
-                    </li>
-                    <li class="post-item">
-                        <a href="#" class="post-title">La mia configurazione di sviluppo preferita</a>
-                        <span class="post-date">03 Apr 2026</span>
-                    </li>
-                </ul>
-            </section>
-        </main>
+    <h3>History</h3>
+    <strong>2026 - Presente</strong>: Progetti Indipendenti & Open Source<br>
+    Sviluppo di applicazioni web moderne e minimaliste, esplorando l'integrazione di AI e nuove tecnologie frontend.<br>
+    <br>
+    <strong>2024 - 2025</strong>: Software Developer<br>
+    Collaborazione in team agili per lo sviluppo di soluzioni enterprise basate su cloud e microservizi.<br>
+    <br>
+    <strong>2022 - 2024</strong>: Formazione & Primi Passi<br>
+    Studi focalizzati sull'ingegneria del software, basi di dati e sviluppo web (Full-Stack).<br>
 
-        <footer>
-            <span>© 2026 FarinaEma</span>
-            <span>Built with HTML &amp; CSS. Under 10KB.</span>
-        </footer>
-    </div>
+    <br>
 
-    <!-- Theme toggler logic -->
-    <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        
-        // Check for saved theme preference, otherwise use system preference
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '[light_mode]';
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-            themeToggle.textContent = '[dark_mode]';
-        }
+    <h3>Writing</h3>
+    <ul>
+        <li><a href="#">Costruire un sito web minimalista nel 2026</a> - 27 Giu 2026</li>
+        <li><a href="#">Perché l'Internet 1.0 era fantastico (e cosa abbiamo perso)</a> - 15 Mag 2026</li>
+        <li><a href="#">La mia configurazione di sviluppo preferita</a> - 03 Apr 2026</li>
+    </ul>
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            let newTheme = 'light';
-            
-            if (currentTheme === 'light') {
-                newTheme = 'dark';
-                themeToggle.textContent = '[light_mode]';
-            } else {
-                themeToggle.textContent = '[dark_mode]';
-            }
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
-    </script>
+    <br>
+    <hr>
+    <br>
+
+    <small>© 2026 FarinaEma - Built with HTML &amp; CSS. Under 10KB.</small>
+
 </body>
+
 </html>
