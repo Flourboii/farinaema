@@ -11,11 +11,32 @@
 </head>
 
 <body>
+    <script>
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('theme-dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                localStorage.setItem('theme', 'classic');
+            }
+        }
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('theme-dark');
+            }
+        })();
+    </script>
+
+    <div style="text-align: right; font-size: 0.8em; margin-bottom: 15px;">
+        [Tema: <a href="javascript:void(0)" onclick="setTheme('classic')">Classico</a> | <a href="javascript:void(0)" onclick="setTheme('dark')">IDE Dark</a>]
+    </div>
 
     <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 15px;">
         <tr valign="middle">
             <td><img src="assets/350-3539598986.webp" alt="FarinaEma Avatar" width="80" height="80"
-                    style="margin-right: 15px; border: 1px solid #000;"></td>
+                    style="margin-right: 15px; border: 1px solid var(--border-color);"></td>
             <td>
                 <h1 style="margin: 0;">Emanuele Farina</h1>
             </td>

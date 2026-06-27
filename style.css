@@ -1,25 +1,48 @@
+:root {
+    /* Classic Light Theme */
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --link-color: #0000ee;
+    --link-visited: #551a8b;
+    --link-active: #ff0000;
+    --hr-color: #ccc;
+    --border-color: #000000;
+}
+
+body.theme-dark {
+    /* IDE Dark Theme */
+    --bg-color: #0f1113;
+    --text-color: #e3e6e8;
+    --link-color: #d4af37;
+    --link-visited: #f1c40f;
+    --link-active: #ffffff;
+    --hr-color: #2d3139;
+    --border-color: #e3e6e8;
+}
+
 body {
     font-family: Times, "Times New Roman", Georgia, serif;
     line-height: 1.5;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     max-width: 800px;
     margin: 20px auto;
     padding: 0 15px;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* Classic HTML links style */
 a {
-    color: #0000ee;
+    color: var(--link-color);
     text-decoration: underline;
 }
 
 a:visited {
-    color: #551a8b;
+    color: var(--link-visited);
 }
 
 a:active {
-    color: #ff0000;
+    color: var(--link-active);
 }
 
 /* Keep headings classic and strong */
@@ -32,7 +55,7 @@ h1, h2, h3, h4 {
 /* Horizontal rule styled traditionally */
 hr {
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--hr-color);
     margin: 1.5em 0;
 }
 
