@@ -77,11 +77,20 @@
                 stopLink.style.fontWeight = 'bold';
             }
         }
+
+        function replayAudio() {
+            if (!player) return;
+            player.seekTo(0);
+            player.playVideo();
+            audioPlaying = true;
+            document.getElementById('audio-play').style.fontWeight = 'bold';
+            document.getElementById('audio-stop').style.fontWeight = 'normal';
+        }
     </script>
 
     <div style="text-align: right; font-size: 0.8em; margin-bottom: 15px;">
         [Tema: <a href="javascript:void(0)" onclick="setTheme('classic')">Chiaro</a> | <a href="javascript:void(0)" onclick="setTheme('dark')">Scuro</a>]
-        [Musica: <a href="javascript:void(0)" id="audio-play" onclick="toggleAudio(true)">Play</a> | <a href="javascript:void(0)" id="audio-stop" onclick="toggleAudio(false)" style="font-weight: bold;">Stop</a>]
+        [Musica: <a href="javascript:void(0)" id="audio-play" onclick="toggleAudio(true)">Play</a> | <a href="javascript:void(0)" id="audio-stop" onclick="toggleAudio(false)" style="font-weight: bold;">Stop</a> | <a href="javascript:void(0)" onclick="replayAudio()">Replay</a>]
     </div>
 
     <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 15px;">
