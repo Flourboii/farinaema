@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silt Strider ASCII - WIP</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #c8b99a;
+            font-family: monospace;
+            padding: 20px;
+        }
+        h2 { color: #e8d5b0; margin-bottom: 4px; }
+        p  { font-size: 0.85em; color: #888; margin-top: 4px; }
+        pre {
+            font-family: monospace;
+            font-size: 0.85em;
+            line-height: 1.2;
+            white-space: pre;
+            user-select: none;
+            border: 1px solid #333;
+            padding: 10px;
+            background: #050505;
+        }
+    </style>
+</head>
+<body>
+    <h2>🦗 Silt Strider ASCII — WIP</h2>
+    <p>Animazione in lavorazione. Non inclusa nel sito principale.</p>
+    <p>Ispirata a: <a href="https://www.youtube.com/watch?v=s4NBDjUTvWg" target="_blank" style="color:#c8b99a;">Silt Striding - Un'animazione di Morrowind</a></p>
+    <pre id="ascii-scene"></pre>
+
+    <script>
+    (function() {
+        var scene = document.getElementById('ascii-scene');
+        var W = 72;
+        var H = 20;
+        var tick = 0;
+
+        //── SILT STRIDER (di profilo, testa a sinistra) ───────────────────────
+        var SS_X = 12;
+        var SS_Y = 2;
+
+        // Corpo (7 righe, creatura guarda a SINISTRA: testa=protuberanza sx)
+        var ssBody = [
+            "              n              ",   // rider in cima
+            "           .(_).             ",   // sella/rider
+            "        .-----------.        ",   // carapace top
+            "       /|))))))))))))\\___    ",   // corpo superiore + ala dx
+            "   .--( |(((((((((((( @)     ",   // .--( = collo+testa, @ = occhio
+            "       \\|))))))))))))       ",   // corpo inferiore
+            "        '-----------'        ",   // base carapace
+        ];
+
+        // Animazione gambe: 4 frame di camminata
+        // Coppia ANTERIORE: ~col 5-7 | Coppia POSTERIORE: ~col 17-19
+        var ssLegs = [
+            // Frame A: gamba-ant-sx e gamba-post-dx in avanti
+            [
+                "     / |           | \\    ",
+                "    /  |           |  \\   ",
+                "   /   |           |   \\  ",
+                "  /    |           |    \\ ",
+                " /     |           |     \\",
+                "       |           |      ",
+                "       '           '      ",
+            ],
+            // Frame B: tutte le gambe dritte (transizione)
+            [
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     ' '           ' '    ",
+            ],
+            // Frame C: gamba-ant-dx e gamba-post-sx in avanti (opposto ad A)
+            [
+                "     | /           \\ |    ",
+                "     |/             \\|    ",
+                "     |               |    ",
+                "     |               |    ",
+                "     |               |    ",
+                "     |               |    ",
+                "     '               '    ",
+            ],
+            // Frame D: tutte dritte (transizione)
+            [
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     | |           | |    ",
+                "     ' '           ' '    ",
+            ],
+        ];
+
+        //── FUNGHI GIGANTI (sfondo Morrowind) ─────────────────────────────────
+        var bgMushs = [];
+        function makeMushArt(size) {
+            if (size === 0) return {
+                art: [
+                    "    .-----------.",
+                    "   /             \\",
+                    "  /               \\",
+                    " |        |        |",
+                    " |        |        |",
+                    " |        |        |",
+                    " |        |        |",
+                ], y: 1
+            };
+            if (size === 1) return {
+                art: [
+                    "  .-------.",
+                    " /         \\",
+                    "|     |     |",
+                    "|     |     |",
+                    "|     |     |",
+                ], y: 3
+            };
+            return {
+                art: [
+                    " .----.",
+                    "/      \\",
+                    "|  ||  |",
+                    "|  ||  |",
+                ], y: 5
+            };
+        }
+        function spawnMush() {
+            var size = Math.floor(Math.random() * 3);
+            var m = makeMushArt(size);
+            var lastX = bgMushs.length > 0
+                ? bgMushs[bgMushs.length-1].x + bgMushs[bgMushs.length-1].art[0].length + 4 + Math.floor(Math.random() * 8)
+                : W;
+            bgMushs.push({ x: lastX, art: m.art, y: m.y });
+        }
+        for (var i = 0; i < 6; i++) spawnMush();
+
+        //── ELEMENTI A TERRA (primo piano) ────────────────────────────────────
+        var gTypes = [
+            { w: 5, art: [" ___ ", "/ - \\", "\\___/"] },
+            { w: 4, art: ["*T*T", "||||"] },
+            { w: 3, art: [" * ", "|||"] },
+            { w: 7, art: ["  .-.  ", " /   \\ ", "/     \\"] },
+        ];
+        var gQueue = [], gX = W;
+        function spawnG() {
+            var gap = 4 + Math.floor(Math.random() * 12);
+            var t = gTypes[Math.floor(Math.random() * gTypes.length)];
+            gQueue.push({ x: gX + gap, elem: t });
+            gX += gap + t.w;
+        }
+        for (var i = 0; i < 8; i++) spawnG();
+
+        //── STELLE ────────────────────────────────────────────────────────────
+        var stars = [];
+        for (var i = 0; i < 14; i++)
+            stars.push({ x: Math.random() * W, y: Math.floor(Math.random() * 2) });
+
+        //── UTILITY: scrivi stringa sulla griglia ─────────────────────────────
+        function blit(grid, r, c, str) {
+            r = Math.floor(r); c = Math.floor(c);
+            if (r < 0 || r >= H) return;
+            for (var i = 0; i < str.length; i++) {
+                var x = c + i;
+                if (x >= 0 && x < W && str[i] !== ' ') grid[r][x] = str[i];
+            }
+        }
+
+        //── RENDER LOOP ───────────────────────────────────────────────────────
+        function render() {
+            // Griglia vuota
+            var grid = [];
+            for (var r = 0; r < H; r++) grid.push(new Array(W).fill(' '));
+
+            // Stelle (scorrono lentissimo)
+            if (tick % 9 === 0) {
+                for (var s = 0; s < stars.length; s++) {
+                    stars[s].x -= 0.3;
+                    if (stars[s].x < 0) stars[s].x = W - 1;
+                }
+            }
+            for (var s = 0; s < stars.length; s++) {
+                var sx = Math.floor(stars[s].x);
+                if (sx >= 0 && sx < W) grid[stars[s].y][sx] = '.';
+            }
+            blit(grid, 0, 64, '(())');
+
+            // Funghi sfondo (scorrono lenti)
+            if (tick % 6 === 0)
+                for (var m = 0; m < bgMushs.length; m++) bgMushs[m].x--;
+            bgMushs = bgMushs.filter(function(m) { return m.x + m.art[0].length > 0; });
+            while (bgMushs.length < 5 || bgMushs[bgMushs.length-1].x < W + 10) spawnMush();
+            for (var m = 0; m < bgMushs.length; m++) {
+                var mush = bgMushs[m];
+                for (var r = 0; r < mush.art.length; r++) blit(grid, mush.y + r, mush.x, mush.art[r]);
+            }
+
+            // Corpo del Silt Strider
+            for (var r = 0; r < ssBody.length; r++)
+                blit(grid, SS_Y + r, SS_X, ssBody[r]);
+
+            // Gambe animate (4 frame)
+            var legFrame = Math.floor(tick / 4) % 4;
+            var legY = SS_Y + ssBody.length;
+            for (var r = 0; r < ssLegs[legFrame].length; r++)
+                blit(grid, legY + r, SS_X + 3, ssLegs[legFrame][r]);
+
+            // Elementi a terra
+            for (var g = 0; g < gQueue.length; g++) gQueue[g].x--;
+            gX--;
+            gQueue = gQueue.filter(function(o) { return o.x + o.elem.w > 0; });
+            while (gX < W + 25) spawnG();
+            for (var g = 0; g < gQueue.length; g++) {
+                var obj = gQueue[g];
+                for (var r = 0; r < obj.elem.art.length; r++)
+                    blit(grid, H - 4 - (obj.elem.art.length - 1 - r), Math.round(obj.x), obj.elem.art[r]);
+            }
+
+            // Linea del suolo
+            for (var x = 0; x < W; x++) grid[H-4][x] = '_';
+            // Texture suolo scorrevole
+            for (var x = 0; x < W; x++)
+                grid[H-3][x] = ((x + Math.floor(tick / 2)) % 5 < 2) ? '.' : '-';
+            // Erba rada
+            for (var x = 0; x < W; x++)
+                grid[H-2][x] = ((x + Math.floor(tick / 3)) % 8 === 0) ? 'v' : ' ';
+
+            scene.textContent = grid.map(function(row) { return row.join(''); }).join('\n');
+            tick++;
+        }
+
+        setInterval(render, 150);
+    })();
+    </script>
+</body>
+</html>
