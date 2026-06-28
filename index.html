@@ -119,10 +119,150 @@
     "Aria alla Bocca" e faccio uso di sostanze stupefacienti quando si presenta l'occasione, mi piace passare il tempo
     da solo o con quei soliti scappati di casa dei miei amici<br>
 
+
     <br>
+    <hr>
+
+    <h3>Sezioni</h3>
+    <ul>
+        <li><a href="consigli.html">» Quello Che Vi Consiglio</a></li>
+    </ul>
+
     <hr>
     <br>
 
+    <pre id="ascii-scene" style="font-family: monospace; font-size: 0.85em; line-height: 1.2; overflow: hidden; white-space: pre; user-select: none;"></pre>
+
+    <script>
+    (function() {
+        var scene = document.getElementById('ascii-scene');
+        var W = 72; // larghezza scena in caratteri
+        var tick = 0;
+
+        // --- sprites ---
+        var heroFrames = [
+            // frame 0
+            [ "  o  ",
+              " /|\\ ",
+              " / \\ " ],
+            // frame 1
+            [ "  o  ",
+              " /|\\ ",
+              "/  \\ " ],
+        ];
+
+        // tipi di elementi del terreno
+        var groundElems = [
+            { w: 4,  art: ["    ", "/\\/\\"] },  // colline
+            { w: 3,  art: ["   ", "^^^"] },      // cespuglio
+            { w: 1,  art: [" ", "|"] },           // sasso
+        ];
+
+        // stelle in cielo
+        var stars = [];
+        for (var s = 0; s < 8; s++) {
+            stars.push({ x: Math.floor(Math.random() * W), y: Math.floor(Math.random() * 2) });
+        }
+
+        // coda di oggetti del terreno da renderizzare
+        var groundQueue = [];
+        var groundX = W;  // posizione prossimo oggetto
+
+        function spawnGround() {
+            var gap = 6 + Math.floor(Math.random() * 8);
+            var elem = groundElems[Math.floor(Math.random() * groundElems.length)];
+            groundQueue.push({ x: groundX + gap, elem: elem });
+            groundX += gap + elem.w;
+        }
+
+        // precarica qualche elemento
+        for (var i = 0; i < 4; i++) spawnGround();
+
+        function renderFrame() {
+            var frame = tick % 2;
+            var speed = 1;
+
+            // muovi tutto a sinistra
+            for (var g = 0; g < groundQueue.length; g++) {
+                groundQueue[g].x -= speed;
+            }
+            groundX -= speed;
+
+            // rimuovi usciti a sinistra, aggiungi nuovi
+            groundQueue = groundQueue.filter(function(o){ return o.x + o.elem.w > 0; });
+            while (groundX < W + 10) spawnGround();
+
+            // muovi stelle (più lente)
+            if (tick % 3 === 0) {
+                for (var s = 0; s < stars.length; s++) {
+                    stars[s].x--;
+                    if (stars[s].x < 0) stars[s].x = W - 1;
+                }
+            }
+
+            // costruisci griglia 6 righe x W colonne
+            var rows = 6;
+            var grid = [];
+            for (var r = 0; r < rows; r++) {
+                grid.push(new Array(W + 1).join(' ').split(''));
+            }
+
+            // stelle (riga 0-1)
+            for (var s = 0; s < stars.length; s++) {
+                var sx = Math.round(stars[s].x) % W;
+                if (sx >= 0 && sx < W) {
+                    grid[stars[s].y][sx] = '.';
+                }
+            }
+
+            // luna (posizione fissa)
+            var moonX = 62;
+            var moonStr = "(())";
+            for (var c = 0; c < moonStr.length; c++) {
+                if (moonX + c < W) grid[0][moonX + c] = moonStr[c];
+            }
+
+            // riga ground (riga 4)
+            for (var x = 0; x < W; x++) grid[4][x] = '_';
+
+            // elementi del terreno (righe 3-4)
+            for (var g = 0; g < groundQueue.length; g++) {
+                var obj = groundQueue[g];
+                var gx = Math.round(obj.x);
+                for (var row = 0; row < obj.elem.art.length; row++) {
+                    var targetRow = 4 - (obj.elem.art.length - 1 - row);
+                    if (targetRow >= 0 && targetRow < rows) {
+                        for (var c = 0; c < obj.elem.art[row].length; c++) {
+                            var px = gx + c;
+                            if (px >= 0 && px < W) {
+                                grid[targetRow][px] = obj.elem.art[row][c];
+                            }
+                        }
+                    }
+                }
+            }
+
+            // hero (posizione x=8, righe 1-3)
+            var hero = heroFrames[frame];
+            var heroX = 8;
+            for (var r = 0; r < hero.length; r++) {
+                var targetRow = 1 + r;
+                for (var c = 0; c < hero[r].length; c++) {
+                    if (heroX + c >= 0 && heroX + c < W && hero[r][c] !== ' ') {
+                        grid[targetRow][heroX + c] = hero[r][c];
+                    }
+                }
+            }
+
+            // riga 5: terreno solido
+            for (var x = 0; x < W; x++) grid[5][x] = (x % 3 === 0) ? '~' : '-';
+
+            scene.textContent = grid.map(function(row){ return row.join(''); }).join('\n');
+            tick++;
+        }
+
+        setInterval(renderFrame, 180);
+    })();
     </script>
 
 
