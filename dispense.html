@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispense e Link Utili | FarinaEma</title>
+    <meta name="description"
+        content="Dispense, appunti e link utili raccolti da Emanuele Farina durante il percorso di Ingegneria Meccanica.">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('theme-dark');
+            }
+        })();
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('theme-dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                localStorage.setItem('theme', 'classic');
+            }
+        }
+    </script>
+
+    <div style="text-align: right; font-size: 0.8em; margin-bottom: 15px;">
+        [Tema: <a href="javascript:void(0)" onclick="setTheme('classic')">Chiaro</a> | <a href="javascript:void(0)" onclick="setTheme('dark')">Scuro</a>]
+        [<a href="index.html">← Home</a>]
+    </div>
+
+    <h1>Dispense e Link Utili</h1>
+    <p><em>Materiale di studio, appunti e risorse raccolte nel tempo. In costruzione.</em></p>
+    <hr>
+
+    <p><em>Niente ancora. Torna più tardi.</em></p>
+
+    <hr>
+    <small>© 2026 FarinaEma – <a href="index.html">← Torna alla home</a></small>
+
+</body>
+
+</html>
